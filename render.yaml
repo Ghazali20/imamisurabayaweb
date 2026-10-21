@@ -1,10 +1,10 @@
 services:
   - type: web
     name: imami-surabaya-web
-    env: php
+    env: docker
     plan: free
-    buildCommand: "composer install --no-dev --optimize-autoloader && npm install && npm run build"
-    startCommand: "php -S 0.0.0.0:$PORT -t public"
+    repo: https://github.com/Ghazali20/imamisurabayaweb
+    branch: main
     envVars:
       - key: APP_ENV
         value: production
