@@ -1,19 +1,13 @@
 {
     "version": 2,
-    "builds": [
+    "framework": "other",
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "rewrites": [
       {
-        "src": "public/index.php",
-        "use": "@vercel/php"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/build/(.*)",
-        "dest": "/public/build/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/public/index.php"
+        "source": "/(.*)",
+        "destination": "/public/index.php"
       }
     ]
   }
