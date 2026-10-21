@@ -66,7 +66,7 @@
                         ⚙️ Admin
                     </a>
                 @else
-                    <a href="{{ route('google.login') }}" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
                         <span>Gabung IMAMI</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -102,7 +102,7 @@
                 @auth
                     <a href="/admin" class="bg-slate-900 dark:bg-slate-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-sm">⚙️ Admin Panel</a>
                 @else
-                    <a href="{{ route('google.login') }}" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
                 @endauth
             </div>
         </div>

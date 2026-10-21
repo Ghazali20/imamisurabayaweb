@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri Kegiatan - IMAMI Surabaya</title>
+    <title>Galeri - IMAMI Surabaya</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-imami.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -66,7 +66,7 @@
                         ⚙️ Admin
                     </a>
                 @else
-                    <a href="{{ route('google.login') }}" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
                         <span>Gabung IMAMI</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -102,7 +102,7 @@
                 @auth
                     <a href="/admin" class="bg-slate-900 dark:bg-slate-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-sm">⚙️ Admin Panel</a>
                 @else
-                    <a href="{{ route('google.login') }}" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
                 @endauth
             </div>
         </div>
@@ -111,32 +111,36 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-10 space-y-8 w-full">
         <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
-            <h1 class="text-3xl font-black text-slate-900 dark:text-white">Galeri Kegiatan IMAMI Surabaya</h1>
-            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Dokumentasi momen berharga dari berbagai kegiatan dan acara yang diselenggarakan oleh komunitas.</p>
+            <h1 class="text-3xl font-black text-slate-900 dark:text-white">Galeri Kegiatan</h1>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Dokumentasi momen berharga, kegiatan sosial, dan kebersamaan keluarga besar IMAMI Surabaya.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @php
-                $galleries = Cache::remember('public_gallery_items', 600, function () {
-                    return \App\Models\Gallery::latest()->get();
-                });
+                $galleries = isset($galleries) ? $galleries : \App\Models\Gallery::latest()->get();
             @endphp
 
-            @forelse($galleries as $item)
+            @forelse($galleries as $gallery)
+                @php
+                    $image = is_object($gallery) ? ($gallery->image ?? $gallery->thumbnail ?? null) : ($gallery['image'] ?? $gallery['thumbnail'] ?? null);
+                    $caption = is_object($gallery) ? ($gallery->caption ?? $gallery->title ?? 'Dokumentasi IMAMI') : ($gallery['caption'] ?? $gallery['title'] ?? 'Dokumentasi IMAMI');
+                @endphp
                 <div class="bg-white dark:bg-[#1E293B] rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col justify-between">
-                    <div class="h-52 overflow-hidden relative">
-                        <img src="{{ str_starts_with($item->image, 'http') ? $item->image : asset('storage/'.$item->image) }}" class="w-full h-full object-cover hover:scale-105 transition duration-300" alt="Galeri">
-                        <div class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-sm">
-                            {{ $item->event_date ? \Carbon\Carbon::parse($item->event_date)->format('d M Y') : 'IMAMI' }}
-                        </div>
+                    <div class="h-64 overflow-hidden relative bg-slate-100 dark:bg-slate-800">
+                        @if($image)
+                            <img src="{{ str_starts_with($image, 'http') ? $image : asset('storage/'.$image) }}" class="w-full h-full object-cover hover:scale-105 transition duration-500" alt="{{ $caption }}">
+                        @else
+                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Galeri IMAMI">
+                        @endif
                     </div>
-                    <div class="p-5 space-y-2">
-                        <h2 class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">{{ $item->title }}</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ $item->description ?? 'Dokumentasi resmi kegiatan IMAMI Surabaya.' }}</p>
+                    <div class="p-5">
+                        <p class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 leading-snug">{{ $caption }}</p>
                     </div>
                 </div>
             @empty
-                <div class="col-span-3 text-center py-12 text-slate-400 text-sm">Belum ada dokumentasi galeri foto yang diunggah.</div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-3 text-center py-16 text-slate-400 text-sm bg-white dark:bg-[#1E293B] rounded-3xl border border-slate-100 dark:border-slate-800">
+                    Belum ada dokumentasi galeri yang ditambahkan. Silakan tambahkan melalui panel admin Filament!
+                </div>
             @endforelse
         </div>
     </main>

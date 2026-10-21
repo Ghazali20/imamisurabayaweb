@@ -64,7 +64,7 @@
                         ⚙️ Admin
                     </a>
                 @else
-                    <a href="{{ route('google.login') }}" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
                         <span>Gabung IMAMI</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -100,7 +100,7 @@
                 @auth
                     <a href="/admin" class="bg-slate-900 dark:bg-slate-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-sm">⚙️ Admin Panel</a>
                 @else
-                    <a href="{{ route('google.login') }}" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
+                    <a href="https://chat.whatsapp.com/BjBsWoH8iqRKb34Xaqq9Ky?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
                 @endauth
             </div>
         </div>
@@ -296,7 +296,7 @@
                             <h2 class="text-xl sm:text-2xl font-black leading-tight drop-shadow-sm line-clamp-3" x-text="slide.title"></h2>
                         </div>
 
-                        <!-- Tombol INFO interaktif (mendukung link eksternal / Instagram) -->
+                        <!-- Tombol INFO interaktif -->
                         <div class="my-4 relative z-10 flex items-center justify-between bg-black/30 p-4 rounded-2xl backdrop-blur-md border border-white/10">
                             <div>
                                 <p class="text-[10px] text-white/80">Ikuti perkembangan terbaru kami!</p>
@@ -329,7 +329,7 @@
             <div id="blog" class="lg:col-span-5 bg-white dark:bg-[#1E293B] p-5 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4 transition-colors duration-300">
                 <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
                     <h2 class="font-extrabold text-slate-900 dark:text-white text-sm flex items-center gap-2">
-                        <svg class="w-4 h-4 text-red-700 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                        <svg class="w-4 h-4 text-red-700 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
                         <span>Kabar & Artikel Komunitas</span>
                     </h2>
                     <a href="{{ route('blog.index') }}" class="text-xs font-bold text-red-700 dark:text-red-400 hover:underline">Lihat Semua ➔</a>
@@ -344,7 +344,7 @@
                                     <h3 class="font-bold text-xs text-slate-800 dark:text-slate-200 line-clamp-1 hover:text-red-700 dark:hover:text-red-400 transition">
                                         <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                                     </h3>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">📅 {{ $post->created_at->format('d M Y') }} • Oleh {{ $post->author_name ?? 'Komunitas IMAMI' }}</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">📅 {{ $post->created_at->format('d M Y') }} Oleh {{ $post->author_name ?? 'Komunitas IMAMI' }}</p>
                                 </div>
                             </div>
                             <a href="{{ route('blog.show', $post->slug) }}" class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-400 hover:bg-red-700 hover:text-white transition shrink-0 ml-2">
