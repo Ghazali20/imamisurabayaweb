@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: imami-surabaya-web
+    env: php
+    plan: free
+    buildCommand: "composer install --no-dev --optimize-autoloader && npm install && npm run build"
+    startCommand: "php -S 0.0.0.0:$PORT -t public"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: aws-0-ap-southeast-2.pooler.supabase.com
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        value: postgres.yehtphdmykzexhgkqbuq
+      - key: DB_PASSWORD
+        value: imamisurabaya1
