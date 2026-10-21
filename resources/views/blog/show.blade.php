@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth" x-data="{
+    darkMode: localStorage.getItem('darkMode') === 'true',
+    mobileMenuOpen: false
+}" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))" :class="{ 'dark': darkMode }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $post->title }} - IMAMI Surabaya</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-imami.png') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#0F172A] text-slate-800 dark:text-slate-100 flex flex-col min-h-screen antialiased transition-colors duration-300">
+
+    <!-- Header Navigation -->
+    <header class="bg-white dark:bg-[#1E293B] border-b border-slate-100 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 shrink-0">
+                <a href="/" class="flex items-center space-x-3">
+                    <img src="/images/logo-imami.png" alt="Logo IMAMI Surabaya" class="h-10 w-auto object-contain">
+                    <div class="border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <h1 class="font-extrabold text-slate-900 dark:text-white tracking-tight leading-none text-xs sm:text-sm">IMAMI SURABAYA</h1>
+                        <p class="text-[8px] sm:text-[9px] text-slate-500 dark:text-slate-400 font-bold tracking-wider uppercase mt-0.5">IKATAN MAHASISWA MINANG SURABAYA</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-xs font-semibold text-slate-600 dark:text-slate-300 shrink-0">
+                <a href="/" class="hover:text-[#B91C1C] dark:hover:text-red-400 transition">Beranda</a>
+                <a href="{{ route('about.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 transition">Tentang Kami</a>
+                <a href="{{ route('programs.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 transition">Program Kerja</a>
+                <a href="{{ route('blog.index') }}" class="text-[#B91C1C] dark:hover:text-red-400 font-bold border-b-2 border-[#B91C1C] pb-1">Kabar Komunitas</a>
+                <a href="{{ route('gallery.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 transition">Galeri</a>
+                <a href="/#kontak" class="hover:text-[#B91C1C] dark:hover:text-red-400 transition">Kontak</a>
+            </nav>
+
+            <!-- Actions / Buttons -->
+            <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+                <!-- Tombol Toggle Dark/Light Mode -->
+                <button @click="darkMode = !darkMode" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-sm border border-slate-200 dark:border-slate-700 shrink-0" title="Ganti Mode Tampilan">
+                    <svg x-show="!darkMode" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg x-show="darkMode" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+
+                <a href="{{ route('blog.create') }}" class="hidden sm:inline-flex bg-red-50 dark:bg-red-950/50 text-[#B91C1C] dark:text-red-400 hover:bg-red-100 font-bold text-xs px-3.5 py-2 rounded-full transition border border-red-200 dark:border-red-900/50 whitespace-nowrap">
+                    + Tulis Kabar
+                </a>
+
+                @auth
+                    <a href="/admin" class="hidden sm:inline-flex bg-slate-900 dark:bg-slate-700 text-white hover:bg-slate-800 font-bold text-xs px-4 py-2 rounded-full transition shadow-sm whitespace-nowrap">
+                        ⚙️ Admin
+                    </a>
+                @else
+                    <a href="{{ route('google.login') }}" class="hidden sm:inline-flex bg-[#B91C1C] hover:bg-red-800 text-white font-bold text-xs px-4 py-2 rounded-full transition items-center space-x-1.5 shadow-md shadow-red-200/50 dark:shadow-none whitespace-nowrap">
+                        <span>Gabung IMAMI</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                @endauth
+
+                <!-- Hamburger Button khusus Mobile -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition border border-slate-200 dark:border-slate-700" title="Menu Navigasi">
+                    <svg x-show="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg x-show="mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="lg:hidden bg-white dark:bg-[#1E293B] border-b border-slate-100 dark:border-slate-800 px-6 py-5 space-y-4 shadow-xl" style="display: none;">
+            <nav class="flex flex-col space-y-3 text-xs font-bold text-slate-700 dark:text-slate-200">
+                <a href="/" class="hover:text-[#B91C1C] dark:hover:text-red-400 py-1">Beranda</a>
+                <a href="{{ route('about.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 py-1 transition">Tentang Kami</a>
+                <a href="{{ route('programs.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 py-1 transition">Program Kerja</a>
+                <a href="{{ route('blog.index') }}" class="text-[#B91C1C] dark:text-red-400 py-1">Kabar Komunitas</a>
+                <a href="{{ route('gallery.index') }}" class="hover:text-[#B91C1C] dark:hover:text-red-400 py-1 transition">Galeri</a>
+                <a href="/#kontak" class="hover:text-[#B91C1C] dark:hover:text-red-400 py-1 transition">Kontak</a>
+            </nav>
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2.5">
+                <a href="{{ route('blog.create') }}" class="sm:hidden bg-red-50 dark:bg-red-950/50 text-[#B91C1C] dark:text-red-400 font-bold text-xs py-2.5 px-4 rounded-xl text-center border border-red-200 dark:border-red-900/50">+ Tulis Kabar</a>
+                @auth
+                    <a href="/admin" class="bg-slate-900 dark:bg-slate-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-sm">⚙️ Admin Panel</a>
+                @else
+                    <a href="{{ route('google.login') }}" class="bg-[#B91C1C] text-white font-bold text-xs py-2.5 px-4 rounded-xl text-center shadow-md">Gabung IMAMI</a>
+                @endauth
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Detail Artikel -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-8 py-10 space-y-8 w-full">
+
+        <!-- Tombol Kembali -->
+        <div>
+            <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#B91C1C] dark:text-slate-400 dark:hover:text-red-400 transition">
+                <span>←</span> Kembali ke Kabar Komunitas
+            </a>
+        </div>
+
+        <!-- Header Artikel -->
+        <div class="space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-red-50 dark:bg-red-950/60 border border-red-100 dark:border-red-900/50 text-red-700 dark:text-red-400 text-xs font-bold px-3 py-1.5 rounded-full">
+                    📅 {{ $post->created_at->translatedFormat('d F Y') }}
+                </span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+                {{ $post->title }}
+            </h1>
+        </div>
+
+        <!-- Thumbnail / Gambar Utama -->
+        @if($post->thumbnail)
+            <div class="h-64 sm:h-[420px] w-full overflow-hidden rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800">
+                <img src="{{ str_starts_with($post->thumbnail, 'http') ? $post->thumbnail : asset('storage/'.$post->thumbnail) }}" class="w-full h-full object-cover" alt="{{ $post->title }}">
+            </div>
+        @endif
+
+        <!-- Isi Konten Artikel -->
+        <article class="bg-white dark:bg-[#1E293B] rounded-3xl border border-slate-100 dark:border-slate-800 p-6 sm:p-10 shadow-sm space-y-6 text-slate-700 dark:text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+            {!! $post->content ?? $post->body ?? 'Belum ada isi konten untuk artikel ini.' !!}
+        </article>
+
+    </main>
+
+    <!-- Footer Konsisten -->
+    <footer class="bg-[#121212] text-white mt-12 py-10 border-t border-zinc-800 text-xs transition-colors duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="flex items-center space-x-3">
+                <img src="/images/logo-imami.png" class="h-10 w-auto invert" alt="Logo IMAMI">
+                <div class="border-l border-zinc-700 pl-3">
+                    <p class="font-extrabold text-white text-sm">IMAMI SURABAYA</p>
+                    <p class="text-[10px] text-zinc-400">IKATAN MAHASISWA MINANG SURABAYA</p>
+                </div>
+            </div>
+            <div class="space-y-1 text-zinc-300">
+                <p class="font-bold text-white text-xs uppercase tracking-wider flex items-center gap-1.5"><span>📍</span> Alamat Kami</p>
+                <a href="https://maps.app.goo.gl/awKLamDftXsYt4Fi9" target="_blank" class="hover:text-red-400 transition block text-[11px] leading-relaxed">
+                    Jl. Gayung Kebonsari No.64, Gayungan, Surabaya <span class="text-red-400 font-bold underline block mt-0.5">Buka di Google Maps ➔</span>
+                </a>
+            </div>
+            <div class="space-y-1 text-zinc-300 md:text-right">
+                <p class="font-bold text-white text-xs uppercase tracking-wider flex items-center md:justify-end gap-1.5"><span>📞</span> Kontak & Media</p>
+                <p class="text-[11px]">085113504191 | imamisurabaya@gmail.com</p>
+                <p class="text-[11px]">Instagram: <a href="https://www.instagram.com/imami_sby/?hl=en" target="_blank" class="text-red-400 hover:underline font-bold">@imami_sby</a></p>
+            </div>
+        </div>
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-8 pt-6 mt-8 border-t border-zinc-800/80 text-center text-zinc-500 text-[10px]">
+            <p>© {{ date('Y') }} IMAMI Surabaya. Ikatan Mahasiswa Minang Surabaya.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
